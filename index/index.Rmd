@@ -1,0 +1,36 @@
+---
+title: "Regional Academy Testing - August"
+author: "Ciaran Miller"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+mail: "cmiller@wru.wales"
+output:
+  epuRate::epurate:
+    toc: TRUE
+    number_sections: FALSE
+    code_folding: "hide"
+---
+
+
+<br><br>
+
+> This website is designed to show an overview of the data collected during Regional Academy testing. If you feel something is missing let me know, and I can do my best to add it.
+
+
+# The basics
+***
+It's generally good to start really broad when looking at all of this data, and think about what are some of the really easy questions to answer. This is every data point we collected this testing block:
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(rmarkdown)    # You need this library to run this template.
+library(epuRate)      # Install with devtools: install_github("holtzy/epuRate", force=TRUE)
+
+data <- read.csv("august_data.csv")
+
+df %>% head(5)
+```
+
+Then I explain what is my input data and I load it. Here is how it looks like:
+```{r}
+# Show it:
+mtcars %>% head(5)
+```
