@@ -15,7 +15,6 @@ output:
 
 > This website is designed to show an overview of the data collected during Regional Academy testing. If you feel something is missing let me know, and I can do my best to add it.
 
-
 # The basics
 ***
 It's generally good to start really broad when looking at all of this data, and think about what are some of the really easy questions to answer. This is all the data we collected this testing block:
@@ -27,7 +26,7 @@ library(janitor)
 library(gt)
 library(gtsummary)
 
-data <- read_csv("../data/december_data.csv") %>% 
+data <- read_csv("data/december_data.csv") %>% 
   clean_names()
 
 data %>% head(5)
@@ -55,6 +54,7 @@ anthro_summary <- anthro %>%
   
 anthro_summary
 ```
+
 
 And a similar look at force & power metrics:
 ```{r, message=FALSE, warning=FALSE}
