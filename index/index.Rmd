@@ -18,19 +18,60 @@ output:
 
 # The basics
 ***
-It's generally good to start really broad when looking at all of this data, and think about what are some of the really easy questions to answer. This is every data point we collected this testing block:
+It's generally good to start really broad when looking at all of this data, and think about what are some of the really easy questions to answer. This is all the data we collected this testing block:
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(rmarkdown)    # You need this library to run this template.
 library(epuRate)      # Install with devtools: install_github("holtzy/epuRate", force=TRUE)
+library(janitor)
+library(gt)
+library(gtsummary)
 
-data <- read.csv("august_data.csv")
+data <- read_csv("../data/december_data.csv") %>% 
+  clean_names()
 
-df %>% head(5)
+data %>% head(5)
 ```
 
-Then I explain what is my input data and I load it. Here is how it looks like:
-```{r}
-# Show it:
-mtcars %>% head(5)
+So it's nicer to look at specific questions, and answer step by step.
+
+Here's all the anthropometry measurements by position:
+```{r, message=FALSE, warning=FALSE}
+anthro <- data %>% 
+  select(position, body_weight, height_13, fat_free_mass, percent_bf)
+
+
+anthro_summary <- anthro %>%
+  tbl_summary(by = "position",
+              statistic = all_continuous() ~ "{mean} ±{sd}",
+              label = list("body_weight" ~ "Body Weight",
+                           "height_13" ~ "Height",
+                           "fat_free_mass" ~ "Fat-Free Mass",
+                           "percent_bf" ~ "BF %")
+  ) %>%
+  as_gt() %>%
+  tab_spanner(label = "Position",
+              columns = 6:14)
+  
+anthro_summary
 ```
+
+And a similar look at force & power metrics:
+```{r, message=FALSE, warning=FALSE}
+force_power <- data %>%
+  select(position, peak_power, w_kg, isosqt_peak_force, pf_bm) %>%
+  drop_na()
+
+force_power_summary <- force_power %>%
+  tbl_summary(by = "position",
+              statistic = all_continuous() ~ "{mean} ±{sd}",
+              label = list("peak_power" ~ "CMJ Peak Power",
+                           "w_kg" ~ "Relative Power",
+                           "isosqt_peak_force" ~ "ISO Peak Force",
+                           "pf_bm" ~ "Relative Peak Force"))
+
+force_power_summary
+```
+
+
+
